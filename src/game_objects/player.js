@@ -1,31 +1,56 @@
-import { GameObjects } from 'phaser';
-import Game from '../scenes/game';
+import Bullet from './bullet';
 
 class Player extends Phaser.GameObjects.Rectangle {
-  static SIZE = 32;
-  static SPEED = 3;
+    static SIZE = 32;
+    static SPEED = 200;
+    static JUMP_SPEED = 420;
+    static SHOOT_DELAY = 1000;
 
-  constructor(scene, x, y) {
-    super(scene, x, y, Player.SIZE, Player.SIZE, 0xffffff);
-    this.rect = scene.add.rectangle(x, y, Player.SIZE, Player.SIZE, 0xffffff);
+    constructor(game, x, y) {
+        super(game, x, y, Player.SIZE, Player.SIZE, 0xFFFFFF, 1.0);
+        game.add.existing(this);
+        this.can_shoot = true;
+        this.setOrigin(0, 0);
+        this.scene.time.addEvent({
+            delay: Player.SHOOT_DELAY,
+            callback: () => {
+                this.can_shoot = true;
+                console.log("can shoot")
+            },
+            callbackScope: this,
+            loop: true
+        });
+    }
 
-    this.cursors = scene.input.keyboard.createCursorKeys();
-  }
+    update() {
+        if (this.scene.cursor.left.isDown) {
+            this.body.setVelocityX(-Player.SPEED);
+        } else if (this.scene.cursor.right.isDown) {
+            this.body.setVelocityX(Player.SPEED);
+        }
+        else {
+            this.body.setVelocityX(0);
+        }
+        this.scene.cursor.up.on('down', () =>
+        {
+            if (this.body.blocked.down)
+            {
+                this.body.setVelocityY(-Player.JUMP_SPEED);
+            }
+        }, this);
+        if (this.scene.input.activePointer.leftButtonDown() && this.can_shoot) {
+            let mouse_x = this.scene.input.activePointer.x;
+            let mouse_y = this.scene.input.activePointer.y;
+            let player_x = this.x;
+            let player_y = this.y;
+            let direction = new Phaser.Math.Vector2(mouse_x - player_x, mouse_y - player_y);
+            direction.normalize();
+            this.scene.bullets.push(new Bullet(this.scene, this.x, this.y, direction))
+            this.can_shoot = false
+        }
+        
+    }
 
-  update() {
-    if (this.cursors.left.isDown) {
-      this.rect.x -= Player.SPEED;
-    }
-    if (this.cursors.right.isDown) {
-      this.rect.x += Player.SPEED;
-    }
-    if (this.cursors.up.isDown) {
-      this.rect.y -= Player.SPEED;
-    }
-    if (this.cursors.down.isDown) {
-      this.rect.y += Player.SPEED;
-    }
-  }
 }
 
 export default Player;
