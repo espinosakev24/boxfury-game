@@ -9,14 +9,13 @@ const config = {
   physics: {
     default: 'arcade',
     arcade: {
-      gravity: { y: 1000 },
+      gravity: { y: 600 },
       debug: true,
-    }
+    },
   },
 };
 
 const game = new Phaser.Game(config);
-
 
 // TODO list
 // 0. Fix shooting bullets to have zero gravity
