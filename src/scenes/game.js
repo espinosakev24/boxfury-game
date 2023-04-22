@@ -23,6 +23,7 @@ class Game extends Phaser.Scene {
     });
 
     this.keys = {};
+    this.graphics = this.add.graphics();
 
     this.cursor = this.input.keyboard.createCursorKeys();
     for (const key of gameKeys) {
@@ -36,7 +37,7 @@ class Game extends Phaser.Scene {
 
     this.cameras.main.setBounds(0, 0, 3000, 3000);
     this.cameras.main.startFollow(this.player, true, 0.08, 0.08);
-
+    this.cameras.main.setBackgroundColor('#87CEEB');
     this.cameras.main.setZoom(1);
 
     this.bullets = [];
@@ -45,22 +46,27 @@ class Game extends Phaser.Scene {
   }
 
   putFlag(x, y) {
-    this.flag = new Flag(this, x, y);
+    this.flag = new Flag(this, x, y - 50);
     this.physics.add.existing(this.flag);
     this.physics.add.collider(this.flag, this.blockBodies);
 
-    console.log('putting flag');
-
     this.physics.add.overlap(this.player, this.flag, () => {
-      if (this.keys.S.isDown && !this.player.hasFlag) {
-        this.flag.destroy();
+      if (
+        this.keys.S.isDown &&
+        !this.player.isSkeyJustPressed &&
+        !this.player.hasFlag
+      ) {
         this.player.hasFlag = true;
+        this.flag.destroy();
+        this.flag = null;
+        this.player.isSkeyJustPressed = true;
+        console.log('picked up flag');
       }
     });
   }
 
   update(time, delta) {
-    this.player.update(delta);
+    this.player.update(delta, this.graphics);
     this.bullets.forEach((bullet) => bullet.update());
   }
 

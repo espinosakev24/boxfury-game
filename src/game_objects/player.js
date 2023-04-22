@@ -14,6 +14,14 @@ class Player extends Phaser.GameObjects.Rectangle {
   static PLAYER_RIGHT_DIRECTION = 1;
   static PLAYER_LEFT_DIRECTION = -1;
 
+  static KEY_CODE_MAP = {
+    A: 65,
+    D: 68,
+    S: 83,
+    W: 87,
+    SPACE: 32,
+  };
+
   constructor(game, x, y) {
     super(game, x, y, Player.SIZE, Player.SIZE, 0xffffff, 1.0);
     game.add.existing(this);
@@ -24,14 +32,57 @@ class Player extends Phaser.GameObjects.Rectangle {
     this.accumulatedDelta = 0;
     this.hasFlag = false;
     this.bulletPath = new Phaser.Curves.Path();
-    this.graphics = game.add.graphics();
-    this.graphics.lineStyle(2, 0x000000, 0.1);
     this.lastDirection = Player.PLAYER_RIGHT_DIRECTION;
+    this.isSkeyJustPressed = false;
 
     game.physics.add.collider(this, game.blockBodies);
     game.physics.add.existing(this);
+    game.input.keyboard.on('keydown', this.handleInputPressed, this);
+    game.input.keyboard.on('keyup', this.handleInputReleased, this);
   }
 
+  update(delta, graphics) {
+    this.movement();
+    this.scene.keys.W.on('down', this.jump, this);
+
+    if (this.scene.cursor.space.isDown) {
+      this.aim(delta);
+    }
+
+    if (this.scene.keys.S.isDown && !this.isSkeyJustPressed && this.hasFlag) {
+      this.isSkeyJustPressed = true;
+      this.throwFlag();
+    }
+
+    if (this.scene.cursor.space.isUp && this.accumulatedDelta > 0) {
+      this.shoot();
+      this.resetAim();
+    }
+
+    graphics.clear();
+
+    if (this.bulletPath.curves.length > 0) {
+      this.drawBulletCurve(graphics);
+    }
+
+    if (this.hasFlag) {
+      this.drawFlag(graphics);
+    }
+  }
+
+  /**
+   * Draw the bullet path
+   * @param {Phaser.Input.Keyboard.Key} key
+   * @memberof Player
+   */
+  drawBulletCurve(graphics) {
+    graphics.lineStyle(2, 0x000000, 1.0);
+    this.bulletPath.draw(graphics);
+  }
+
+  /**
+   * Shoot the bullet
+   */
   shoot() {
     this.scene.bullets.push(
       new Bullet(
@@ -46,11 +97,13 @@ class Player extends Phaser.GameObjects.Rectangle {
   }
 
   throwFlag() {
-    console.log('throwing flag');
     this.hasFlag = false;
     this.scene.putFlag(this.x, this.y);
   }
 
+  /**
+   * Calculate the bullet path
+   */
   calculatePath() {
     this.bulletPath.destroy();
     this.bulletPath.moveTo(this.x, this.y);
@@ -69,7 +122,13 @@ class Player extends Phaser.GameObjects.Rectangle {
     }
   }
 
-  update(delta) {
+  jump() {
+    if (this.body.blocked.down) {
+      this.body.setVelocityY(-Player.JUMP_SPEED);
+    }
+  }
+
+  movement() {
     if (this.scene.keys.A.isDown) {
       this.body.setVelocityX(-Player.SPEED);
       this.lastDirection = Player.PLAYER_LEFT_DIRECTION;
@@ -79,73 +138,74 @@ class Player extends Phaser.GameObjects.Rectangle {
     } else {
       this.body.setVelocityX(0);
     }
-    this.scene.keys.W.on(
-      'down',
-      () => {
-        if (this.body.blocked.down) {
-          this.body.setVelocityY(-Player.JUMP_SPEED);
-        }
-      },
-      this
+  }
+
+  /**
+   * Aim the bullet and calculate the path
+   * @param {*} delta
+   */
+  aim(delta) {
+    this.accumulatedDelta += delta;
+    this.aimAngle = Phaser.Math.Interpolation.SmoothStep(
+      this.accumulatedDelta / Player.MAX_AIM_TIME,
+      Player.MIN_ANGLE,
+      Player.MAX_ANGLE
     );
-
-    if (this.scene.cursor.space.isDown) {
-      this.accumulatedDelta += delta;
-      this.aimAngle = Phaser.Math.Interpolation.SmoothStep(
-        this.accumulatedDelta / Player.MAX_AIM_TIME,
-        Player.MIN_ANGLE,
-        Player.MAX_ANGLE
-      );
-      this.aimSpeed = Phaser.Math.Interpolation.SmoothStep(
-        this.accumulatedDelta / Player.MAX_AIM_TIME,
-        Player.MIN_SHOOT_SPEED,
-        Player.MAX_SHOOT_SPEED
-      );
-      this.calculatePath();
-      if (this.aimAngle >= Player.MAX_ANGLE) {
-        this.shoot();
-        this.accumulatedDelta = 0;
-        this.aimAngle = 0;
-        this.aimSpeed = 0;
-      }
-    }
-
-    if (this.hasFlag && this.scene.keys.S.justDown) {
-      this.throwFlag();
-    }
-
-    if (this.scene.cursor.space.isUp && this.accumulatedDelta > 0) {
+    this.aimSpeed = Phaser.Math.Interpolation.SmoothStep(
+      this.accumulatedDelta / Player.MAX_AIM_TIME,
+      Player.MIN_SHOOT_SPEED,
+      Player.MAX_SHOOT_SPEED
+    );
+    this.calculatePath();
+    if (this.aimAngle >= Player.MAX_ANGLE) {
       this.shoot();
-      this.bulletPath.destroy();
       this.accumulatedDelta = 0;
       this.aimAngle = 0;
       this.aimSpeed = 0;
     }
+  }
 
-    if (this.hasFlag) {
-      this.scene.flag.x = this.x;
-      this.scene.flag.y = this.y;
+  /**
+   * Draw the flag
+   * @param {*} graphics
+   */
+  drawFlag(graphics) {
+    graphics.lineStyle(2, 0x000000, 1.0);
+    graphics.fillStyle(0xfe654f, 1.0);
+    graphics.fillRect(
+      this.x -
+        Flag.WIDTH / 2 +
+        (Player.SIZE / 2 - Flag.WIDTH / 2) * -this.lastDirection,
+      this.y - 32,
+      10,
+      32
+    );
+  }
+
+  /**
+   * Reset the aim
+   * @memberof Player
+   */
+  resetAim() {
+    this.bulletPath.destroy();
+    this.accumulatedDelta = 0;
+    this.aimAngle = 0;
+    this.aimSpeed = 0;
+  }
+
+  /**
+   * Handle the input pressed event
+   * @param {*} event
+   */
+  handleInputPressed(event) {
+    if (event.keyCode === Player.KEY_CODE_MAP.S) {
+      this.isSkeyJustPressed = false;
     }
+  }
 
-    // draw path if it has points
-    this.graphics.clear();
-
-    if (this.bulletPath.curves.length > 0) {
-      this.bulletPath.draw(this.graphics);
-    }
-
-    if (this.hasFlag) {
-      // draw flag above player
-      this.graphics.lineStyle(2, 0x000000, 1.0);
-      this.graphics.fillStyle(0xfe654f, 1.0);
-      this.graphics.fillRect(
-        this.x -
-          Flag.WIDTH / 2 +
-          (Player.SIZE / 2 - Flag.WIDTH / 2) * -this.lastDirection,
-        this.y - 32,
-        10,
-        32
-      );
+  handleInputReleased(event) {
+    if (event.keyCode === Player.KEY_CODE_MAP.S) {
+      this.isSkeyJustPressed = true;
     }
   }
 }
