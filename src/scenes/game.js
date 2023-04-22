@@ -1,5 +1,6 @@
 import Phaser from 'phaser';
 import { Flag, Player, Block } from '../game_objects';
+import { gameKeys } from '../utils';
 
 class Game extends Phaser.Scene {
   static WIDTH = 760;
@@ -15,36 +16,53 @@ class Game extends Phaser.Scene {
   }
 
   create() {
-    this.cursor = this.input.keyboard.createCursorKeys();
     this.blocks = this.load_level();
-    this.player = new Player(this, 200, 100);
-    this.flag = new Flag(this, 200, 300);
 
-    this.cameras.main.setBounds(0, 0, 3000, 3000);
-    this.cameras.main.startFollow(this.player, true, 0.08, 0.08);
-
-    this.cameras.main.setZoom(1.5);
-
-    const blockBodies = this.blocks.map((block) => {
+    this.blockBodies = this.blocks.map((block) => {
       return this.physics.add.existing(block, true);
     });
 
-    this.physics.add.existing(this.player);
+    this.keys = {};
+    this.graphics = this.add.graphics();
+
+    this.cursor = this.input.keyboard.createCursorKeys();
+    for (const key of gameKeys) {
+      this.keys[key] = this.input.keyboard.addKey(
+        Phaser.Input.Keyboard.KeyCodes[key]
+      );
+    }
+    this.flag = null;
+
+    this.player = new Player(this, 200, 100);
+
+    this.cameras.main.setBounds(0, 0, 3000, 3000);
+    this.cameras.main.startFollow(this.player, true, 0.08, 0.08);
+    this.cameras.main.setBackgroundColor('#87CEEB');
+    this.cameras.main.setZoom(1);
+
+    this.bullets = [];
+
+    this.putFlag(200, 300);
+  }
+
+  putFlag(x, y) {
+    this.flag = new Flag(this, x, y - 50);
     this.physics.add.existing(this.flag);
+    this.physics.add.collider(this.flag, this.blockBodies);
 
-    // this.flag.body.allowGravity = false;
-
-    this.physics.add.collider(this.player, blockBodies);
-    this.physics.add.collider(this.flag, blockBodies);
     this.physics.add.overlap(this.player, this.flag, () => {
-      if (this.cursor.down.isDown) {
+      if (this.keys.S.isDown && !this.player.isSkeyJustPressed && !this.player.hasFlag) {
         this.player.hasFlag = true;
+        this.flag.destroy();
+        this.flag = null;
+        this.player.isSkeyJustPressed = true;
+        console.log('picked up flag');
       }
     });
-    this.bullets = [];
   }
-  update(time, delta) {
-    this.player.update(delta);
+
+  update(time, delta) { 
+    this.player.update(delta, this.graphics);
     this.bullets.forEach((bullet) => bullet.update());
   }
 
