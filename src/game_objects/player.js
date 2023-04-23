@@ -25,6 +25,7 @@ class Player extends Phaser.GameObjects.Rectangle {
     this.aimAngle = 0;
     this.aimSpeed = 0;
     this.accumulatedDelta = 0;
+    this.shootTimer = 0;
     this.hasFlag = false;
     this.bulletPath = new Phaser.Curves.Path();
     this.lastDirection = Player.PLAYER_RIGHT_DIRECTION;
@@ -35,15 +36,20 @@ class Player extends Phaser.GameObjects.Rectangle {
   }
 
   update(delta, graphics) {
+    this.shootTimer += delta;
     this.movement();
     this.scene.keys.W.on('down', this.jump, this);
 
     if (this.scene.cursor.space.isDown) {
       this.aim(delta);
     }
+    if (this.shootTimer > Player.SHOOT_DELAY) {
+      this.canShoot = true;
+      this.shootTimer = 0;
+    }
 
     if (this.scene.cursor.space.isUp && this.accumulatedDelta > 0) {
-      this.shoot();
+      this.canShoot && !this.hasFlag && this.shoot();
       this.resetAim();
     }
 
@@ -82,6 +88,7 @@ class Player extends Phaser.GameObjects.Rectangle {
         this.lastDirection
       )
     );
+    this.canShoot = false;
   }
 
   throwFlag() {
@@ -145,7 +152,7 @@ class Player extends Phaser.GameObjects.Rectangle {
       Player.MAX_SHOOT_SPEED
     );
     this.calculatePath();
-    if (this.aimAngle >= Player.MAX_ANGLE) {
+    if (this.aimAngle >= Player.MAX_ANGLE && this.canShoot && !this.hasFlag) {
       this.shoot();
       this.accumulatedDelta = 0;
       this.aimAngle = 0;
