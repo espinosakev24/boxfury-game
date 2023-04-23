@@ -35,10 +35,11 @@ class Game extends Phaser.Scene {
 
     this.player = new Player(this, 200, 100);
 
-    this.cameras.main.setBounds(0, 0, 3000, 3000);
+    this.cameras.main.setBounds(0, 0, this.levelWidth * Block.SIZE, this.levelHeight * Block.SIZE);
     this.cameras.main.startFollow(this.player, true, 0.08, 0.08);
     this.cameras.main.setBackgroundColor('#87CEEB');
     this.cameras.main.setZoom(1);
+
 
     this.bullets = [];
 
@@ -49,20 +50,6 @@ class Game extends Phaser.Scene {
     this.flag = new Flag(this, x, y - 50);
     this.physics.add.existing(this.flag);
     this.physics.add.collider(this.flag, this.blockBodies);
-
-    this.physics.add.overlap(this.player, this.flag, () => {
-      if (
-        this.keys.S.isDown &&
-        !this.player.isSkeyJustPressed &&
-        !this.player.hasFlag
-      ) {
-        this.player.hasFlag = true;
-        this.flag.destroy();
-        this.flag = null;
-        this.player.isSkeyJustPressed = true;
-        console.log('picked up flag');
-      }
-    });
   }
 
   update(time, delta) {
@@ -75,6 +62,8 @@ class Game extends Phaser.Scene {
     const rows = level_data.trim().split('\n');
     const levelmap = rows.map((row) => row.split(''));
     const blocks = [];
+    this.levelWidth = levelmap[0].length;
+    this.levelHeight = levelmap.length;
 
     for (let i = 0; i < levelmap.length; i++) {
       for (let j = 0; j < levelmap[i].length; j++) {

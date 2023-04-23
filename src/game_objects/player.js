@@ -1,5 +1,7 @@
 import Bullet from './bullet';
 import Flag from './flag';
+import { checkOverlap } from '../utils';
+
 
 class Player extends Phaser.GameObjects.Rectangle {
   static SIZE = 32;
@@ -13,14 +15,7 @@ class Player extends Phaser.GameObjects.Rectangle {
   static MIN_SHOOT_SPEED = 400;
   static PLAYER_RIGHT_DIRECTION = 1;
   static PLAYER_LEFT_DIRECTION = -1;
-
-  static KEY_CODE_MAP = {
-    A: 65,
-    D: 68,
-    S: 83,
-    W: 87,
-    SPACE: 32,
-  };
+  static S_KEY_CODE = 83;
 
   constructor(game, x, y) {
     super(game, x, y, Player.SIZE, Player.SIZE, 0xffffff, 1.0);
@@ -33,12 +28,10 @@ class Player extends Phaser.GameObjects.Rectangle {
     this.hasFlag = false;
     this.bulletPath = new Phaser.Curves.Path();
     this.lastDirection = Player.PLAYER_RIGHT_DIRECTION;
-    this.isSkeyJustPressed = false;
 
     game.physics.add.collider(this, game.blockBodies);
     game.physics.add.existing(this);
     game.input.keyboard.on('keydown', this.handleInputPressed, this);
-    game.input.keyboard.on('keyup', this.handleInputReleased, this);
   }
 
   update(delta, graphics) {
@@ -47,11 +40,6 @@ class Player extends Phaser.GameObjects.Rectangle {
 
     if (this.scene.cursor.space.isDown) {
       this.aim(delta);
-    }
-
-    if (this.scene.keys.S.isDown && !this.isSkeyJustPressed && this.hasFlag) {
-      this.isSkeyJustPressed = true;
-      this.throwFlag();
     }
 
     if (this.scene.cursor.space.isUp && this.accumulatedDelta > 0) {
@@ -198,14 +186,14 @@ class Player extends Phaser.GameObjects.Rectangle {
    * @param {*} event
    */
   handleInputPressed(event) {
-    if (event.keyCode === Player.KEY_CODE_MAP.S) {
-      this.isSkeyJustPressed = false;
-    }
-  }
-
-  handleInputReleased(event) {
-    if (event.keyCode === Player.KEY_CODE_MAP.S) {
-      this.isSkeyJustPressed = true;
+    if (event.keyCode === Player.S_KEY_CODE) {
+      if (this.hasFlag){
+        this.throwFlag();
+      }
+      else if(checkOverlap(this, this.scene.flag) && !this.hasFlag){
+        this.scene.flag.destroy();
+        this.hasFlag = true;
+      }
     }
   }
 }

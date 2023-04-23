@@ -1,1 +1,1 @@
-export const gameKeys = ['W', 'A', 'S', 'D'];
+export const gameKeys = ['W', 'A', 'D'];

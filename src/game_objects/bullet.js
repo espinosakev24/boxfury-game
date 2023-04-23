@@ -1,4 +1,4 @@
-import Game from '../scenes/game';
+import Block from './block.js';
 
 class Bullet extends Phaser.GameObjects.Arc {
   static SIZE = 4;
@@ -17,13 +17,12 @@ class Bullet extends Phaser.GameObjects.Arc {
   }
 
   update() {
-    if (
-      this.x < 0 ||
-      this.x > Game.WIDTH ||
-      this.y < 0 ||
-      this.y > Game.HEIGHT
-    ) {
-      this.destroy();
+    if (this.x < 0 || this.x > this.scene.levelWidth * Block.SIZE ||
+      this.y < 0 || this.y > this.scene.levelHeight * Block.SIZE)
+     {
+        this.scene.bullets = this.scene.bullets.filter(bullet => bullet !== this);
+        this.destroy();
+
     }
   }
 }
