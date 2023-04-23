@@ -13,14 +13,16 @@ class Game extends Phaser.Scene {
   preload() {
     this.load.setBaseURL('http://localhost:8080/src');
     this.load.text('level', 'levels/level1.txt');
+    this.load.image('tiles', 'assets/tile_images/platform_tileset.png');
+    this.load.tilemapTiledJSON('map', 'assets/tmx/base.json');
   }
 
   create() {
-    this.blocks = this.load_level();
-
-    this.blockBodies = this.blocks.map((block) => {
-      return this.physics.add.existing(block, true);
-    });
+    //this.blocks = this.physics.add.staticGroup();
+    
+    // this.load_level().map((block) => {
+    //   return this.blocks.add(block)
+    // });
 
     this.keys = {};
     this.graphics = this.add.graphics();
@@ -31,11 +33,17 @@ class Game extends Phaser.Scene {
         Phaser.Input.Keyboard.KeyCodes[key]
       );
     }
-    this.flag = null;
-
     this.player = new Player(this, 200, 100);
 
-    this.cameras.main.setBounds(0, 0, this.levelWidth * Block.SIZE, this.levelHeight * Block.SIZE);
+    this.flag = null;
+    this.map = this.make.tilemap({ key: 'map' });
+    this.tileset = this.map.addTilesetImage('platform_tileset', 'tiles');
+    this.layer = this.map.createLayer('Tile Layer 1', this.tileset, 0, 0);
+    this.map.setCollision(1)
+    this.physics.add.collider(this.player, this.layer);
+
+
+    this.cameras.main.setBounds(0, 0, this.map.widthInPixels, this.map.heightInPixels);
     this.cameras.main.startFollow(this.player, true, 0.08, 0.08);
     this.cameras.main.setBackgroundColor('#87CEEB');
     this.cameras.main.setZoom(1);
@@ -43,13 +51,13 @@ class Game extends Phaser.Scene {
 
     this.bullets = [];
 
-    this.putFlag(200, 300);
+    this.putFlag(2300, 300);
   }
 
   putFlag(x, y) {
     this.flag = new Flag(this, x, y - 50);
     this.physics.add.existing(this.flag);
-    this.physics.add.collider(this.flag, this.blockBodies);
+    this.physics.add.collider(this.flag, this.blocks);
   }
 
   update(time, delta) {

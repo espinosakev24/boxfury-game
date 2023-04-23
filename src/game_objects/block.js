@@ -1,5 +1,5 @@
 class Block extends Phaser.GameObjects.Rectangle {
-    static SIZE = 64;
+    static SIZE = 2223;
     static COLOR = 0xFEEFDD;
 
     constructor(game, x, y) {

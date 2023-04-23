@@ -29,8 +29,7 @@ class Player extends Phaser.GameObjects.Rectangle {
     this.hasFlag = false;
     this.bulletPath = new Phaser.Curves.Path();
     this.lastDirection = Player.PLAYER_RIGHT_DIRECTION;
-
-    game.physics.add.collider(this, game.blockBodies);
+    //game.physics.add.collider(this, game.blocks);
     game.physics.add.existing(this);
     game.input.keyboard.on('keydown', this.handleInputPressed, this);
   }
@@ -124,14 +123,13 @@ class Player extends Phaser.GameObjects.Rectangle {
   }
 
   movement() {
+    this.body.setVelocityX(0);
     if (this.scene.keys.A.isDown) {
       this.body.setVelocityX(-Player.SPEED);
       this.lastDirection = Player.PLAYER_LEFT_DIRECTION;
     } else if (this.scene.keys.D.isDown) {
       this.body.setVelocityX(Player.SPEED);
       this.lastDirection = Player.PLAYER_RIGHT_DIRECTION;
-    } else {
-      this.body.setVelocityX(0);
     }
   }
 
