@@ -30,9 +30,10 @@ class Player extends Phaser.GameObjects.Rectangle {
     this.lastDirection = Player.PLAYER_RIGHT_DIRECTION;
     this.scene.physics.add.existing(this);
     this.scene.input.keyboard.on('keydown', this.handleInputPressed, this);
-    this.arrow = this.scene.add.image(0, 0, 'emptyArrow');
-    this.arrow.setOrigin(0, 0.5);
-    this.arrow.setDepth(1);
+    // this.arrow = this.scene.add.image(0, 0, 'emptyArrow');
+    // this.arrow.setOrigin(0, 0.5);
+    // this.arrow.setDepth(1);
+    this.setDepth(1);
   }
 
   update(delta, graphics) {
@@ -69,6 +70,7 @@ class Player extends Phaser.GameObjects.Rectangle {
     this.gameState.bullets.push(
       new Bullet(
         this.scene,
+        this.gameState,
         this.x,
         this.y,
         this.aimAngle,

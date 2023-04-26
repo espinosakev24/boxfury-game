@@ -1,14 +1,14 @@
 class Bullet extends Phaser.GameObjects.Arc {
-  static SIZE = 4;
+  static SIZE = 6;
   static COLOR = 0xff0000;
 
-  constructor(game, x, y, shootAngle, speed, playerDirection) {
-    super(game, x, y, Bullet.SIZE, 0, 360, false, Bullet.COLOR, 1.0);
-
-    game.add.existing(this);
+  constructor(scene, gameState, x, y, shootAngle, speed, playerDirection) {
+    super(scene, x, y, Bullet.SIZE, 0, 360, false, Bullet.COLOR, 1.0);
+    this.scene.add.existing(this);
+    this.gameState = gameState;
     this.setOrigin(0, 0);
     this.scene.physics.add.existing(this);
-    this.scene.physics.add.collider(this, this.scene.layer, () => {
+    this.scene.physics.add.collider(this, this.gameState.layer, (gameObjectA, gameObjectB) => {
       this.destroy();
     });
     this.body.setVelocity(
