@@ -1,14 +1,16 @@
-class TeamBase extends Phaser.GameObjects.Rectangle{
-    static SIZE = 256;
-    static RED_TEAM = 1;
-    static BLUE_TEAM = 2;
-    // TODO add a team enumerator
+class TeamBase extends Phaser.GameObjects.Rectangle {
+  static RED_TEAM = 1;
+  static BLUE_TEAM = 2;
+  // TODO add a team enumerator
 
-    constructor(game, x, y, team) {
-        super(game, x, y, TeamBase.SIZE, TeamBase.SIZE, 0xffffff, 1.0);
-        this.team = team;
-        this.score = 0;
-    }
+  constructor(scene, x, y, width, height, team) {
+    super(scene, x, y - height, width, height, 0xffffff, 1.0);
+
+    this.scene.add.existing(this);
+    this.setOrigin(0, 0);
+    this.team = team;
+    this.score = 0;
+  }
 }
 
 export default TeamBase;
