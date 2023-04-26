@@ -1,5 +1,6 @@
 import Phaser from 'phaser';
-import { Flag, Player, Block } from '../game_objects';
+import { Flag, Player } from '../game_objects';
+import Assets from '../utils/assets';
 import { gameKeys } from '../utils';
 
 class Game extends Phaser.Scene {
@@ -11,18 +12,10 @@ class Game extends Phaser.Scene {
   }
 
   preload() {
-    this.load.setBaseURL('http://localhost:8080/src');
-    this.load.text('level', 'levels/level1.txt');
-    this.load.image('tiles', 'assets/tile_images/platform_tileset.png');
-    this.load.tilemapTiledJSON('map', 'assets/tmx/base.json');
+    Assets.loadAssets(this)
   }
 
   create() {
-    //this.blocks = this.physics.add.staticGroup();
-    
-    // this.load_level().map((block) => {
-    //   return this.blocks.add(block)
-    // });
 
     this.keys = {};
     this.graphics = this.add.graphics();
@@ -45,7 +38,7 @@ class Game extends Phaser.Scene {
 
     this.cameras.main.setBounds(0, 0, this.map.widthInPixels, this.map.heightInPixels);
     this.cameras.main.startFollow(this.player, true, 0.08, 0.08);
-    this.cameras.main.setBackgroundColor('#87CEEB');
+    this.cameras.main.setBackgroundColor('#333333');
     this.cameras.main.setZoom(1);
 
 
@@ -63,25 +56,6 @@ class Game extends Phaser.Scene {
   update(time, delta) {
     this.player.update(delta, this.graphics);
     this.bullets.forEach((bullet) => bullet.update());
-  }
-
-  load_level() {
-    const level_data = this.cache.text.get('level');
-    const rows = level_data.trim().split('\n');
-    const levelmap = rows.map((row) => row.split(''));
-    const blocks = [];
-    this.levelWidth = levelmap[0].length;
-    this.levelHeight = levelmap.length;
-
-    for (let i = 0; i < levelmap.length; i++) {
-      for (let j = 0; j < levelmap[i].length; j++) {
-        if (levelmap[i][j] === '1') {
-          const block = new Block(this, j * Block.SIZE, i * Block.SIZE);
-          blocks.push(block);
-        }
-      }
-    }
-    return blocks;
   }
 }
 

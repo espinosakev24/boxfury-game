@@ -8,7 +8,7 @@ class Player extends Phaser.GameObjects.Rectangle {
   static SPEED = 300;
   static JUMP_SPEED = 420;
   static SHOOT_DELAY = 1000;
-  static MAX_AIM_TIME = 500;
+  static MAX_AIM_TIME = 1000;
   static MAX_ANGLE = Math.PI;
   static MIN_ANGLE = Math.PI / 4;
   static MAX_SHOOT_SPEED = 700;
@@ -27,11 +27,12 @@ class Player extends Phaser.GameObjects.Rectangle {
     this.accumulatedDelta = 0;
     this.shootTimer = 0;
     this.hasFlag = false;
-    this.bulletPath = new Phaser.Curves.Path();
     this.lastDirection = Player.PLAYER_RIGHT_DIRECTION;
-    //game.physics.add.collider(this, game.blocks);
     game.physics.add.existing(this);
     game.input.keyboard.on('keydown', this.handleInputPressed, this);
+    this.arrow = this.scene.add.image(0, 0, 'emptyArrow');
+    this.arrow.setOrigin(0, 0.5);
+    this.arrow.setDepth(1);
   }
 
   update(delta, graphics) {
@@ -39,7 +40,7 @@ class Player extends Phaser.GameObjects.Rectangle {
     this.movement();
     this.scene.keys.W.on('down', this.jump, this);
 
-    if (this.scene.cursor.space.isDown) {
+    if (this.scene.cursor.space.isDown && this.canShoot) {
       this.aim(delta);
     }
     if (this.shootTimer > Player.SHOOT_DELAY) {
@@ -54,23 +55,14 @@ class Player extends Phaser.GameObjects.Rectangle {
 
     graphics.clear();
 
-    if (this.bulletPath.curves.length > 0) {
-      this.drawBulletCurve(graphics);
-    }
-
     if (this.hasFlag) {
       this.drawFlag(graphics);
     }
   }
 
-  /**
-   * Draw the bullet path
-   * @param {Phaser.Input.Keyboard.Key} key
-   * @memberof Player
-   */
-  drawBulletCurve(graphics) {
-    graphics.lineStyle(2, 0x000000, 1.0);
-    this.bulletPath.draw(graphics);
+
+  drawAimArrow(graphics) {
+    
   }
 
   /**
@@ -93,27 +85,6 @@ class Player extends Phaser.GameObjects.Rectangle {
   throwFlag() {
     this.hasFlag = false;
     this.scene.putFlag(this.x, this.y);
-  }
-
-  /**
-   * Calculate the bullet path
-   */
-  calculatePath() {
-    this.bulletPath.destroy();
-    this.bulletPath.moveTo(this.x, this.y);
-    let t = 0;
-    let timeStep = 0.01;
-    while (t < 0.1) {
-      let x =
-        this.x +
-        Math.sin(this.aimAngle) * this.aimSpeed * t * this.lastDirection;
-      let y =
-        this.y +
-        Math.cos(this.aimAngle) * this.aimSpeed * t -
-        0.5 * -600 * t * t;
-      this.bulletPath.lineTo(x, y);
-      t += timeStep;
-    }
   }
 
   jump() {
@@ -149,7 +120,7 @@ class Player extends Phaser.GameObjects.Rectangle {
       Player.MIN_SHOOT_SPEED,
       Player.MAX_SHOOT_SPEED
     );
-    this.calculatePath();
+    
     if (this.aimAngle >= Player.MAX_ANGLE && this.canShoot && !this.hasFlag) {
       this.shoot();
       this.accumulatedDelta = 0;
@@ -180,7 +151,6 @@ class Player extends Phaser.GameObjects.Rectangle {
    * @memberof Player
    */
   resetAim() {
-    this.bulletPath.destroy();
     this.accumulatedDelta = 0;
     this.aimAngle = 0;
     this.aimSpeed = 0;
