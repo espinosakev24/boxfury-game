@@ -1,5 +1,3 @@
-import Block from './block.js';
-
 class Bullet extends Phaser.GameObjects.Arc {
   static SIZE = 4;
   static COLOR = 0xff0000;
@@ -10,6 +8,9 @@ class Bullet extends Phaser.GameObjects.Arc {
     game.add.existing(this);
     this.setOrigin(0, 0);
     this.scene.physics.add.existing(this);
+    this.scene.physics.add.collider(this, this.scene.layer, () => {
+      this.destroy();
+    });
     this.body.setVelocity(
       Math.sin(shootAngle) * speed * playerDirection,
       Math.cos(shootAngle) * speed
