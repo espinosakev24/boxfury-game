@@ -12,11 +12,10 @@ class Game extends Phaser.Scene {
   }
 
   preload() {
-    Assets.loadAssets(this)
+    Assets.loadAssets(this);
   }
 
   create() {
-
     this.keys = {};
 
     this.cursor = this.input.keyboard.createCursorKeys();
@@ -26,7 +25,6 @@ class Game extends Phaser.Scene {
       );
     }
     this.gameState = new GameState(this, 'map');
-
   }
 
   update(time, delta) {

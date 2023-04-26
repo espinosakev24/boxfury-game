@@ -1,10 +1,10 @@
 class BaseGameState {
-    constructor(game) {
-        this.game = game;
-        this.graphics = this.game.add.graphics();
-    }
+  constructor(scene) {
+    this.scene = scene;
+    this.graphics = this.scene.add.graphics();
+  }
 
-    update(time, delta) {}
+  update(time, delta) {}
 }
 
 export default BaseGameState;

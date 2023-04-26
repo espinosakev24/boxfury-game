@@ -2,7 +2,6 @@ import Bullet from './bullet';
 import Flag from './flag';
 import { checkOverlap } from '../utils';
 
-
 class Player extends Phaser.GameObjects.Rectangle {
   static SIZE = 32;
   static SPEED = 300;
@@ -17,9 +16,10 @@ class Player extends Phaser.GameObjects.Rectangle {
   static PLAYER_LEFT_DIRECTION = -1;
   static S_KEY_CODE = 83;
 
-  constructor(game, x, y) {
-    super(game, x, y, Player.SIZE, Player.SIZE, 0xffffff, 1.0);
-    game.add.existing(this);
+  constructor(gameState, x, y) {
+    super(gameState.scene, x, y, Player.SIZE, Player.SIZE, 0xffffff, 1.0);
+    this.gameState = gameState;
+    this.scene.add.existing(this);
     this.canShoot = true;
     this.setOrigin(0.5, 0.5);
     this.aimAngle = 0;
@@ -28,8 +28,8 @@ class Player extends Phaser.GameObjects.Rectangle {
     this.shootTimer = 0;
     this.hasFlag = false;
     this.lastDirection = Player.PLAYER_RIGHT_DIRECTION;
-    game.physics.add.existing(this);
-    game.input.keyboard.on('keydown', this.handleInputPressed, this);
+    this.scene.physics.add.existing(this);
+    this.scene.input.keyboard.on('keydown', this.handleInputPressed, this);
     this.arrow = this.scene.add.image(0, 0, 'emptyArrow');
     this.arrow.setOrigin(0, 0.5);
     this.arrow.setDepth(1);
@@ -60,16 +60,13 @@ class Player extends Phaser.GameObjects.Rectangle {
     }
   }
 
-
-  drawAimArrow(graphics) {
-    
-  }
+  drawAimArrow(graphics) {}
 
   /**
    * Shoot the bullet
    */
   shoot() {
-    this.scene.bullets.push(
+    this.gameState.bullets.push(
       new Bullet(
         this.scene,
         this.x,
@@ -84,7 +81,7 @@ class Player extends Phaser.GameObjects.Rectangle {
 
   throwFlag() {
     this.hasFlag = false;
-    this.scene.putFlag(this.x, this.y);
+    this.gameState.putFlag(this.x, this.y);
   }
 
   jump() {
@@ -120,7 +117,7 @@ class Player extends Phaser.GameObjects.Rectangle {
       Player.MIN_SHOOT_SPEED,
       Player.MAX_SHOOT_SPEED
     );
-    
+
     if (this.aimAngle >= Player.MAX_ANGLE && this.canShoot && !this.hasFlag) {
       this.shoot();
       this.accumulatedDelta = 0;
@@ -162,11 +159,10 @@ class Player extends Phaser.GameObjects.Rectangle {
    */
   handleInputPressed(event) {
     if (event.keyCode === Player.S_KEY_CODE) {
-      if (this.hasFlag){
+      if (this.hasFlag) {
         this.throwFlag();
-      }
-      else if(checkOverlap(this, this.scene.flag) && !this.hasFlag){
-        this.scene.flag.destroy();
+      } else if (checkOverlap(this, this.gameState.flag) && !this.hasFlag) {
+        this.gameState.flag.destroy();
         this.hasFlag = true;
       }
     }
