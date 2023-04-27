@@ -671,17 +671,8 @@
          "tilewidth":64
         }, 
         {
-         "columns":14,
          "firstgid":3,
-         "image":"..\/..\/..\/..\/kenney_platformer-pack-medieval\/Spritesheet\/medieval_spritesheet.png",
-         "imageheight":2048,
-         "imagewidth":1024,
-         "margin":0,
-         "name":"castle",
-         "spacing":0,
-         "tilecount":406,
-         "tileheight":70,
-         "tilewidth":70
+         "source":"..\/tsx\/castle.tsx"
         }],
  "tilewidth":64,
  "type":"map",
