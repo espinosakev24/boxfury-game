@@ -43,13 +43,7 @@ class GameState extends BaseGameState {
   }
 
   initBases() {
-    this.baseLayer.objects.forEach(({ properties, x, y, width, height }) => {
-      const [base] = properties;
 
-      //   this.bases.push(
-      //     new TeamBase(this.scene, x, y, width, height, base.value)
-      //   );
-    });
   }
 
   putFlag(x, y) {
