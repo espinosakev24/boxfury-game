@@ -13,12 +13,6 @@ class GameState extends BaseGameState {
     this.map = scene.make.tilemap({ key: map_key });
 
     this.tileset = this.map.addTilesetImage('platform_tileset', 'tiles');
-    this.castleTileset = this.map.addTilesetImage(
-      'castle_tiles',
-      'castle_tiles'
-    );
-
-    console.log(this.castleTileset, this.tileset);
 
     this.layer = this.map.createLayer('Tile Layer 1', this.tileset, 0, 0);
     this.baseLayer = this.map.getObjectLayer('Base1', this.castleTileset, 0, 0);
@@ -45,26 +39,21 @@ class GameState extends BaseGameState {
 
     this.bases = [];
 
-    this.putFlag(300, 100);
+    this.putFlag(500, 100);
 
     this.initBases();
   }
 
   initBases() {
-    this.baseLayer.objects.forEach(({ properties, x, y, width, height }) => {
-      // const [base] = properties;
+    console.log();
 
-      this.bases.push(
-        new TeamBase(this.scene, x, y, width, height, TeamBase.RED_TEAM)
-      );
-    });
-    // const castles = this.baseLayer.objects.filter(
-    //   ({ name }) => name === 'Castle'
-    // );
-    // console.log(castles);
-    // this.baseLayer.objects.forEach(({ properties, ...props }) => {
-    //   // console.log(props);
-    // });
+    this.baseLayer.objects
+      .filter((base) => base.name === 'Collider1' || base.name === 'Collider2')
+      .forEach(({ x, y, width, height, ...props }, idx) => {
+        this.bases.push(
+          new TeamBase(this, x, y + height, width, height, idx + 1)
+        );
+      });
   }
 
   putFlag(x, y) {
