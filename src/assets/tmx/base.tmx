@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.1" orientation="orthogonal" renderorder="right-down" width="20" height="20" tilewidth="64" tileheight="64" infinite="0" nextlayerid="4" nextobjectid="21">
+<map version="1.10" tiledversion="1.10.1" orientation="orthogonal" renderorder="right-down" width="20" height="20" tilewidth="64" tileheight="64" infinite="0" nextlayerid="5" nextobjectid="94">
  <editorsettings>
   <export target="base.json" format="json"/>
  </editorsettings>
  <tileset firstgid="1" name="platform_tileset" tilewidth="64" tileheight="64" tilecount="2" columns="2">
   <image source="../tile_images/platform_tileset.png" width="128" height="64"/>
+ </tileset>
+ <tileset firstgid="3" name="castle" tilewidth="70" tileheight="70" tilecount="406" columns="14">
+  <image source="../../../../kenney_platformer-pack-medieval/Spritesheet/medieval_spritesheet.png" width="1024" height="2048"/>
  </tileset>
  <layer id="1" name="Tile Layer 1" width="20" height="20">
   <data encoding="csv">
@@ -30,19 +33,115 @@
 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
 </data>
  </layer>
- <objectgroup id="2" name="Bases">
+ <objectgroup id="2" name="Base1">
   <properties>
    <property name="Team" value="1"/>
   </properties>
-  <object id="18" gid="2" x="192" y="256" width="128" height="128">
+  <object id="23" name="Castle" gid="328" x="223.265" y="256.053" width="34.1209" height="34.1209">
    <properties>
-    <property name="Team" value="2"/>
+    <property name="base collision" value="True"/>
    </properties>
   </object>
-  <object id="20" gid="2" x="832" y="1216" width="128" height="128">
+  <object id="24" name="Castle" gid="300" x="254.461" y="256.053" width="34.1209" height="34.1209">
    <properties>
-    <property name="Team" value="1"/>
+    <property name="base collision" value="True"/>
    </properties>
   </object>
+  <object id="42" name="Castle" gid="263" x="193.004" y="161.908" width="33.7977" height="33.7977">
+   <properties>
+    <property name="base collision" value="False"/>
+   </properties>
+  </object>
+  <object id="43" name="Castle" gid="263" x="223.905" y="131.007" width="33.7977" height="33.7977">
+   <properties>
+    <property name="base collision" value="False"/>
+   </properties>
+  </object>
+  <object id="44" name="Castle" gid="249" x="254.805" y="131.007" width="33.7977" height="33.7977"/>
+  <object id="45" name="Castle" gid="249" x="285.706" y="161.908" width="33.7977" height="33.7977">
+   <properties>
+    <property name="base collision" value="False"/>
+   </properties>
+  </object>
+  <object id="46" name="Castle" gid="305" x="223.905" y="161.908" width="33.7977" height="33.7977">
+   <properties>
+    <property name="base collision" value="False"/>
+   </properties>
+  </object>
+  <object id="47" name="Castle" gid="305" x="254.805" y="161.908" width="33.7977" height="33.7977">
+   <properties>
+    <property name="base collision" value="False"/>
+   </properties>
+  </object>
+  <object id="48" name="Castle" gid="298" x="223.905" y="100.107" width="33.7977" height="33.7977">
+   <properties>
+    <property name="base collision" value="False"/>
+   </properties>
+  </object>
+  <object id="52" name="Castle" gid="165" x="192.068" y="193.661" width="34.1209" height="34.1209"/>
+  <object id="55" name="Castle" gid="165" x="285.657" y="193.661" width="34.1209" height="34.1209"/>
+  <object id="56" name="Castle" gid="105" x="254.461" y="193.661" width="34.1209" height="34.1209"/>
+  <object id="57" name="Castle" gid="105" x="223.265" y="193.661" width="34.1209" height="34.1209"/>
+  <object id="58" name="Castle" gid="345" x="192.068" y="256.053" width="34.1209" height="34.1209"/>
+  <object id="59" name="Castle" gid="345" x="192.068" y="224.857" width="34.1209" height="34.1209"/>
+  <object id="60" name="Castle" gid="317" x="285.657" y="256.053" width="34.1209" height="34.1209"/>
+  <object id="61" name="Castle" gid="317" x="285.657" y="224.857" width="34.1209" height="34.1209"/>
+  <object id="71" name="Castle" gid="317" x="285.657" y="224.857" width="34.1209" height="34.1209"/>
+  <object id="62" name="Castle" gid="359" x="223.265" y="224.857" width="34.1209" height="34.1209"/>
+  <object id="63" name="Castle" gid="359" x="254.461" y="224.857" width="34.1209" height="34.1209"/>
+  <object id="69" name="Collider1" x="192" y="158" width="128" height="98"/>
+  <object id="73" name="Castle" gid="328" x="924.704" y="1214.09" width="34.1209" height="34.1209">
+   <properties>
+    <property name="base collision" value="True"/>
+   </properties>
+  </object>
+  <object id="74" name="Castle" gid="300" x="955.9" y="1214.09" width="34.1209" height="34.1209">
+   <properties>
+    <property name="base collision" value="True"/>
+   </properties>
+  </object>
+  <object id="75" name="Castle" gid="263" x="894.443" y="1119.95" width="33.7977" height="33.7977">
+   <properties>
+    <property name="base collision" value="False"/>
+   </properties>
+  </object>
+  <object id="76" name="Castle" gid="263" x="925.344" y="1089.05" width="33.7977" height="33.7977">
+   <properties>
+    <property name="base collision" value="False"/>
+   </properties>
+  </object>
+  <object id="77" name="Castle" gid="249" x="956.244" y="1089.05" width="33.7977" height="33.7977"/>
+  <object id="78" name="Castle" gid="249" x="987.145" y="1119.95" width="33.7977" height="33.7977">
+   <properties>
+    <property name="base collision" value="False"/>
+   </properties>
+  </object>
+  <object id="79" name="Castle" gid="305" x="925.344" y="1119.95" width="33.7977" height="33.7977">
+   <properties>
+    <property name="base collision" value="False"/>
+   </properties>
+  </object>
+  <object id="80" name="Castle" gid="305" x="956.244" y="1119.95" width="33.7977" height="33.7977">
+   <properties>
+    <property name="base collision" value="False"/>
+   </properties>
+  </object>
+  <object id="81" name="Castle" gid="298" x="925.344" y="1058.15" width="33.7977" height="33.7977">
+   <properties>
+    <property name="base collision" value="False"/>
+   </properties>
+  </object>
+  <object id="82" name="Castle" gid="165" x="893.507" y="1151.7" width="34.1209" height="34.1209"/>
+  <object id="83" name="Castle" gid="165" x="987.096" y="1151.7" width="34.1209" height="34.1209"/>
+  <object id="84" name="Castle" gid="105" x="955.9" y="1151.7" width="34.1209" height="34.1209"/>
+  <object id="85" name="Castle" gid="105" x="924.704" y="1151.7" width="34.1209" height="34.1209"/>
+  <object id="86" name="Castle" gid="345" x="893.507" y="1214.09" width="34.1209" height="34.1209"/>
+  <object id="87" name="Castle" gid="345" x="893.507" y="1182.9" width="34.1209" height="34.1209"/>
+  <object id="88" name="Castle" gid="317" x="987.096" y="1214.09" width="34.1209" height="34.1209"/>
+  <object id="89" name="Castle" gid="317" x="987.096" y="1182.9" width="34.1209" height="34.1209"/>
+  <object id="90" name="Castle" gid="317" x="987.096" y="1182.9" width="34.1209" height="34.1209"/>
+  <object id="91" name="Castle" gid="359" x="924.704" y="1182.9" width="34.1209" height="34.1209"/>
+  <object id="92" name="Castle" gid="359" x="955.9" y="1182.9" width="34.1209" height="34.1209"/>
+  <object id="93" name="Collider2" x="896" y="1118" width="128" height="98"/>
  </objectgroup>
 </map>
