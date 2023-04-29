@@ -1,13 +1,15 @@
 import Bullet from './bullet';
 import Flag from './flag';
 import { checkOverlap } from '../utils';
+import { KEYBOARD, PLAYER_MOVEMENTS } from '../constants';
 
-class Player extends Phaser.GameObjects.Rectangle {
-  static SIZE = 32;
+class Player extends Phaser.GameObjects.Sprite {
+  static WIDTH = 32;
+  static HEIGHT = 64;
   static SPEED = 300;
   static JUMP_SPEED = 420;
-  static SHOOT_DELAY = 1000;
-  static MAX_AIM_TIME = 1000;
+  static SHOOT_DELAY = 800;
+  static MAX_AIM_TIME = 800;
   static MAX_ANGLE = Math.PI;
   static MIN_ANGLE = Math.PI / 4;
   static MAX_SHOOT_SPEED = 700;
@@ -17,34 +19,50 @@ class Player extends Phaser.GameObjects.Rectangle {
   static S_KEY_CODE = 83;
 
   constructor(gameState, x, y, id) {
-    super(gameState.scene, x, y, Player.SIZE, Player.SIZE, 0xffffff, 1.0);
+    super(gameState.scene, x, y, 'player');
     this.id = id;
     this.gameState = gameState;
     this.scene.add.existing(this);
     this.canShoot = true;
-    this.setOrigin(0.5, 0.5);
     this.aimAngle = 0;
     this.aimSpeed = 0;
     this.accumulatedDelta = 0;
     this.shootTimer = 0;
+    this.setOrigin(0.5, 0.5);
     this.hasFlag = false;
     this.lastDirection = Player.PLAYER_RIGHT_DIRECTION;
     this.scene.physics.add.existing(this);
+    this.body.setSize(Player.WIDTH, Player.HEIGHT, true);
     this.scene.input.keyboard.on('keydown', this.handleInputPressed, this);
+    this.scene.input.keyboard.on('keyup', this.handleInputReleased, this);
     this.team = 1;
-    // this.arrow = this.scene.add.image(0, 0, 'emptyArrow');
-    // this.arrow.setOrigin(0, 0.5);
-    // this.arrow.setDepth(1);
+    this.bow = this.scene.add.image(this.x, this.y, 'bow');
+    this.bow.setOrigin(0, 0.5);
+    this.bow.setDepth(1);
     this.setDepth(1);
   }
 
-  update(delta, graphics) {
+  update(delta) {
+    this.bow.x = this.x;
+    this.bow.y = this.y;
+    if (this.lastDirection === Player.PLAYER_RIGHT_DIRECTION) {
+      this.setFlipX(false);
+    } else {
+      this.setFlipX(true);
+    }
+
     this.shootTimer += delta;
     this.movement();
     this.scene.keys.W.on('down', this.jump, this);
 
     if (this.scene.cursor.space.isDown && this.canShoot) {
       this.aim(delta);
+    } else {
+      this.bow.setRotation(
+        this.lastDirection === Player.PLAYER_RIGHT_DIRECTION
+          ? Math.PI / 4
+          : (Math.PI * 3) / 4
+      );
     }
     if (this.shootTimer > Player.SHOOT_DELAY) {
       this.canShoot = true;
@@ -56,24 +74,21 @@ class Player extends Phaser.GameObjects.Rectangle {
       this.resetAim();
     }
 
-    graphics.clear();
-
     if (this.hasFlag) {
-      this.drawFlag(graphics);
     }
   }
-
-  drawAimArrow(graphics) {}
 
   /**
    * Shoot the bullet
    */
   shoot() {
+    const x = this.x + (this.width / 2) * this.lastDirection;
+
     this.gameState.bullets.push(
       new Bullet(
         this.scene,
         this.gameState,
-        this.x,
+        x,
         this.y,
         this.aimAngle,
         this.aimSpeed,
@@ -121,6 +136,11 @@ class Player extends Phaser.GameObjects.Rectangle {
       Player.MIN_SHOOT_SPEED,
       Player.MAX_SHOOT_SPEED
     );
+    this.bow.setRotation(
+      this.lastDirection === Player.PLAYER_RIGHT_DIRECTION
+        ? -this.aimAngle + Math.PI / 2
+        : (Math.PI * 2) / 4 + this.aimAngle
+    );
 
     if (this.aimAngle >= Player.MAX_ANGLE && this.canShoot && !this.hasFlag) {
       this.shoot();
@@ -128,23 +148,6 @@ class Player extends Phaser.GameObjects.Rectangle {
       this.aimAngle = 0;
       this.aimSpeed = 0;
     }
-  }
-
-  /**
-   * Draw the flag
-   * @param {*} graphics
-   */
-  drawFlag(graphics) {
-    graphics.lineStyle(2, 0x000000, 1.0);
-    graphics.fillStyle(0xfe654f, 1.0);
-    graphics.fillRect(
-      this.x -
-        Flag.WIDTH / 2 +
-        (Player.SIZE / 2 - Flag.WIDTH / 2) * -this.lastDirection,
-      this.y - 32,
-      10,
-      32
-    );
   }
 
   /**
@@ -169,6 +172,44 @@ class Player extends Phaser.GameObjects.Rectangle {
         this.gameState.flag.destroy();
         this.hasFlag = true;
       }
+    }
+
+    this.handleEmitEvent(event.keyCode);
+
+    // console.log(event.keyCode);
+  }
+
+  handleInputReleased({ keyCode }) {
+    if (keyCode === KEYBOARD.A || keyCode === KEYBOARD.D) {
+      this.gameState.socket.emit('player_action', {
+        action: PLAYER_MOVEMENTS.STOP,
+        id: this.id,
+      });
+    }
+  }
+
+  handleEmitEvent(key) {
+    if (!this.gameState.socket) return;
+
+    if (key === KEYBOARD.D) {
+      this.gameState.socket.emit('player_action', {
+        action: PLAYER_MOVEMENTS.RIGHT,
+        id: this.id,
+      });
+    }
+
+    if (key === KEYBOARD.A) {
+      this.gameState.socket.emit('player_action', {
+        action: PLAYER_MOVEMENTS.LEFT,
+        id: this.id,
+      });
+    }
+
+    if (key === KEYBOARD.W) {
+      this.gameState.socket.emit('player_action', {
+        action: PLAYER_MOVEMENTS.JUMP,
+        id: this.id,
+      });
     }
   }
 }
