@@ -6,6 +6,7 @@ class Assets {
     scene.load.image('player', 'assets/images/character_squareRed.png');
     scene.load.image('bow', 'assets/images/item_bow.png');
     scene.load.image('arrow', 'assets/images/item_arrow.png');
+    scene.load.image('flag', 'assets/images/tile_flag.png');
   }
 }
 

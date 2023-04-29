@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.10" tiledversion="1.10.1" orientation="orthogonal" renderorder="right-down" width="20" height="20" tilewidth="64" tileheight="64" infinite="0" nextlayerid="4" nextobjectid="6">
+ <editorsettings>
+  <export target="base.json" format="json"/>
+ </editorsettings>
  <tileset firstgid="1" name="scribble_spritesheet" tilewidth="64" tileheight="64" tilecount="121" columns="11">
   <image source="../tile_images/scribble_spritesheet.png" width="704" height="704"/>
  </tileset>
@@ -62,7 +65,7 @@
     <property name="team" value="2"/>
    </properties>
   </object>
-  <object id="5" name="flag" x="1182" y="794">
+  <object id="5" name="flag" x="568" y="329">
    <ellipse/>
   </object>
  </objectgroup>

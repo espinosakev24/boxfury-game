@@ -7,7 +7,7 @@ class Player extends Phaser.GameObjects.Sprite {
   static WIDTH = 32;
   static HEIGHT = 64;
   static SPEED = 300;
-  static JUMP_SPEED = 420;
+  static JUMP_SPEED = 450;
   static SHOOT_DELAY = 800;
   static MAX_AIM_TIME = 800;
   static MAX_ANGLE = Math.PI;
@@ -39,7 +39,13 @@ class Player extends Phaser.GameObjects.Sprite {
     this.bow = this.scene.add.image(this.x, this.y, 'bow');
     this.bow.setOrigin(0, 0.5);
     this.bow.setDepth(1);
-    this.setDepth(1);
+    this.setDepth(2);
+    this.flagTexture = this.scene.add.image(this.x, this.y, 'flag');
+    this.flagTexture.setTint(Flag.COLOR);
+    this.flagTexture.setDepth(1);
+    this.flagTexture.setDisplaySize(Flag.WIDTH, Flag.HEIGHT);
+    this.flagTexture.setOrigin(0, 0);
+    this.flagTexture.visible = false;
   }
 
   update(delta) {
@@ -74,7 +80,12 @@ class Player extends Phaser.GameObjects.Sprite {
       this.resetAim();
     }
 
+    this.flagTexture.visible = this.hasFlag;
+    this.bow.visible = !this.hasFlag;
+
     if (this.hasFlag) {
+      this.flagTexture.x = this.x;
+      this.flagTexture.y = this.y - 70;
     }
   }
 
