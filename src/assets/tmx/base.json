@@ -1,701 +1,148 @@
-{
-  "compressionlevel": -1,
-  "height": 20,
-  "infinite": false,
-  "layers": [
-    {
-      "data": [
-        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0,
-        0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1,
-        1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 0, 1, 1,
-        1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0,
-        0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
-        1, 1, 1, 1, 1, 0, 0, 1, 1, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        1, 0, 1, 1, 1, 0, 1, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 1, 0, 0, 1,
-        1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 1, 1, 0, 1, 1, 1, 0, 1, 1, 0, 0, 0,
-        0, 1, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 1, 0, 0, 1, 1, 0,
-        1, 1, 0, 0, 1, 0, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1, 0, 0, 1, 1, 1, 1, 1, 0,
-        0, 0, 1, 0, 1, 0, 0, 1, 1, 0, 1, 1, 0, 0, 1, 1, 1, 0, 1, 0, 1, 0, 0, 0,
-        0, 0, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1,
-        1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1,
-        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1
-      ],
-      "height": 20,
-      "id": 1,
-      "name": "Tile Layer 1",
-      "opacity": 1,
-      "type": "tilelayer",
-      "visible": true,
-      "width": 20,
-      "x": 0,
-      "y": 0
-    },
-    {
-      "draworder": "topdown",
-      "id": 2,
-      "name": "Base1",
-      "objects": [
+{ "compressionlevel":-1,
+ "height":20,
+ "infinite":false,
+ "layers":[
         {
-          "gid": 328,
-          "height": 34.1209,
-          "id": 23,
-          "name": "Castle",
-          "properties": [
-            {
-              "name": "base collision",
-              "type": "string",
-              "value": "True"
-            }
-          ],
-          "rotation": 0,
-          "type": "",
-          "visible": true,
-          "width": 34.1209,
-          "x": 223.265,
-          "y": 256.053
-        },
+         "data":[61, 61, 61, 61, 61, 61, 61, 61, 61, 61, 61, 61, 61, 61, 61, 61, 61, 61, 61, 61,
+            61, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 61,
+            61, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 61,
+            61, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 61, 61, 0, 0, 0, 61,
+            61, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 61, 61, 0, 0, 0, 0, 0, 0, 61,
+            61, 0, 103, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 61,
+            61, 66, 66, 0, 0, 0, 0, 0, 61, 61, 0, 0, 0, 0, 0, 0, 0, 61, 61, 61,
+            61, 83, 83, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 61,
+            61, 95, 95, 0, 0, 0, 0, 17, 17, 17, 17, 17, 17, 0, 0, 0, 0, 0, 0, 61,
+            61, 17, 17, 17, 17, 17, 17, 106, 106, 106, 106, 106, 106, 0, 0, 0, 0, 0, 0, 61,
+            61, 106, 106, 106, 106, 106, 106, 106, 106, 106, 106, 106, 106, 17, 0, 0, 0, 0, 0, 61,
+            61, 106, 106, 106, 106, 106, 106, 106, 106, 106, 106, 106, 106, 17, 17, 0, 0, 0, 0, 61,
+            61, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 106, 106, 106, 17, 17, 0, 0, 0, 61,
+            61, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 106, 17, 0, 0, 61,
+            61, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 61, 61,
+            61, 0, 103, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 61,
+            61, 66, 66, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 61, 61, 0, 0, 61,
+            61, 83, 83, 0, 0, 0, 0, 0, 0, 0, 0, 61, 61, 0, 0, 0, 0, 0, 61, 61,
+            61, 95, 95, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 61,
+            61, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 61],
+         "height":20,
+         "id":1,
+         "name":"world_layer",
+         "opacity":1,
+         "type":"tilelayer",
+         "visible":true,
+         "width":20,
+         "x":0,
+         "y":0
+        }, 
         {
-          "gid": 300,
-          "height": 34.1209,
-          "id": 24,
-          "name": "Castle",
-          "properties": [
-            {
-              "name": "base collision",
-              "type": "string",
-              "value": "True"
-            }
-          ],
-          "rotation": 0,
-          "type": "",
-          "visible": true,
-          "width": 34.1209,
-          "x": 254.461,
-          "y": 256.053
-        },
+         "data":[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 16, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 47, 0, 0,
+            0, 70, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 22, 0, 0, 0, 0, 0, 58, 40, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 33, 0, 0, 0, 0, 0, 0, 0, 0, 0, 12, 13, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 19, 0, 0, 0, 0, 1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 30, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 47, 0, 0, 0, 0,
+            0, 26, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 44, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 58, 0, 55, 0, 40, 0, 0, 0, 0, 0, 58, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+         "height":20,
+         "id":2,
+         "name":"decoration",
+         "opacity":1,
+         "type":"tilelayer",
+         "visible":true,
+         "width":20,
+         "x":0,
+         "y":0
+        }, 
         {
-          "gid": 263,
-          "height": 33.7977,
-          "id": 42,
-          "name": "Castle",
-          "properties": [
-            {
-              "name": "base collision",
-              "type": "string",
-              "value": "False"
-            }
-          ],
-          "rotation": 0,
-          "type": "",
-          "visible": true,
-          "width": 33.7977,
-          "x": 193.004,
-          "y": 161.908
-        },
+         "draworder":"topdown",
+         "id":3,
+         "name":"team_bases",
+         "objects":[
+                {
+                 "height":196,
+                 "id":1,
+                 "name":"base_collider",
+                 "properties":[
+                        {
+                         "name":"team",
+                         "type":"string",
+                         "value":"1"
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":128,
+                 "x":64,
+                 "y":384
+                }, 
+                {
+                 "height":196,
+                 "id":2,
+                 "name":"base_collider",
+                 "properties":[
+                        {
+                         "name":"team",
+                         "type":"string",
+                         "value":"2"
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":128,
+                 "x":64,
+                 "y":1024
+                }, 
+                {
+                 "ellipse":true,
+                 "height":0,
+                 "id":5,
+                 "name":"flag",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":1182,
+                 "y":794
+                }],
+         "opacity":1,
+         "type":"objectgroup",
+         "visible":true,
+         "x":0,
+         "y":0
+        }],
+ "nextlayerid":4,
+ "nextobjectid":6,
+ "orientation":"orthogonal",
+ "renderorder":"right-down",
+ "tiledversion":"1.10.1",
+ "tileheight":64,
+ "tilesets":[
         {
-          "gid": 263,
-          "height": 33.7977,
-          "id": 43,
-          "name": "Castle",
-          "properties": [
-            {
-              "name": "base collision",
-              "type": "string",
-              "value": "False"
-            }
-          ],
-          "rotation": 0,
-          "type": "",
-          "visible": true,
-          "width": 33.7977,
-          "x": 223.905,
-          "y": 131.007
-        },
-        {
-          "gid": 249,
-          "height": 33.7977,
-          "id": 44,
-          "name": "Castle",
-          "rotation": 0,
-          "type": "",
-          "visible": true,
-          "width": 33.7977,
-          "x": 254.805,
-          "y": 131.007
-        },
-        {
-          "gid": 249,
-          "height": 33.7977,
-          "id": 45,
-          "name": "Castle",
-          "properties": [
-            {
-              "name": "base collision",
-              "type": "string",
-              "value": "False"
-            }
-          ],
-          "rotation": 0,
-          "type": "",
-          "visible": true,
-          "width": 33.7977,
-          "x": 285.706,
-          "y": 161.908
-        },
-        {
-          "gid": 305,
-          "height": 33.7977,
-          "id": 46,
-          "name": "Castle",
-          "properties": [
-            {
-              "name": "base collision",
-              "type": "string",
-              "value": "False"
-            }
-          ],
-          "rotation": 0,
-          "type": "",
-          "visible": true,
-          "width": 33.7977,
-          "x": 223.905,
-          "y": 161.908
-        },
-        {
-          "gid": 305,
-          "height": 33.7977,
-          "id": 47,
-          "name": "Castle",
-          "properties": [
-            {
-              "name": "base collision",
-              "type": "string",
-              "value": "False"
-            }
-          ],
-          "rotation": 0,
-          "type": "",
-          "visible": true,
-          "width": 33.7977,
-          "x": 254.805,
-          "y": 161.908
-        },
-        {
-          "gid": 298,
-          "height": 33.7977,
-          "id": 48,
-          "name": "Castle",
-          "properties": [
-            {
-              "name": "base collision",
-              "type": "string",
-              "value": "False"
-            }
-          ],
-          "rotation": 0,
-          "type": "",
-          "visible": true,
-          "width": 33.7977,
-          "x": 223.905,
-          "y": 100.107
-        },
-        {
-          "gid": 165,
-          "height": 34.1209,
-          "id": 52,
-          "name": "Castle",
-          "rotation": 0,
-          "type": "",
-          "visible": true,
-          "width": 34.1209,
-          "x": 192.068,
-          "y": 193.661
-        },
-        {
-          "gid": 165,
-          "height": 34.1209,
-          "id": 55,
-          "name": "Castle",
-          "rotation": 0,
-          "type": "",
-          "visible": true,
-          "width": 34.1209,
-          "x": 285.657,
-          "y": 193.661
-        },
-        {
-          "gid": 105,
-          "height": 34.1209,
-          "id": 56,
-          "name": "Castle",
-          "rotation": 0,
-          "type": "",
-          "visible": true,
-          "width": 34.1209,
-          "x": 254.461,
-          "y": 193.661
-        },
-        {
-          "gid": 105,
-          "height": 34.1209,
-          "id": 57,
-          "name": "Castle",
-          "rotation": 0,
-          "type": "",
-          "visible": true,
-          "width": 34.1209,
-          "x": 223.265,
-          "y": 193.661
-        },
-        {
-          "gid": 345,
-          "height": 34.1209,
-          "id": 58,
-          "name": "Castle",
-          "rotation": 0,
-          "type": "",
-          "visible": true,
-          "width": 34.1209,
-          "x": 192.068,
-          "y": 256.053
-        },
-        {
-          "gid": 345,
-          "height": 34.1209,
-          "id": 59,
-          "name": "Castle",
-          "rotation": 0,
-          "type": "",
-          "visible": true,
-          "width": 34.1209,
-          "x": 192.068,
-          "y": 224.857
-        },
-        {
-          "gid": 317,
-          "height": 34.1209,
-          "id": 60,
-          "name": "Castle",
-          "rotation": 0,
-          "type": "",
-          "visible": true,
-          "width": 34.1209,
-          "x": 285.657,
-          "y": 256.053
-        },
-        {
-          "gid": 317,
-          "height": 34.1209,
-          "id": 61,
-          "name": "Castle",
-          "rotation": 0,
-          "type": "",
-          "visible": true,
-          "width": 34.1209,
-          "x": 285.657,
-          "y": 224.857
-        },
-        {
-          "gid": 317,
-          "height": 34.1209,
-          "id": 71,
-          "name": "Castle",
-          "rotation": 0,
-          "type": "",
-          "visible": true,
-          "width": 34.1209,
-          "x": 285.657,
-          "y": 224.857
-        },
-        {
-          "gid": 359,
-          "height": 34.1209,
-          "id": 62,
-          "name": "Castle",
-          "rotation": 0,
-          "type": "",
-          "visible": true,
-          "width": 34.1209,
-          "x": 223.265,
-          "y": 224.857
-        },
-        {
-          "gid": 359,
-          "height": 34.1209,
-          "id": 63,
-          "name": "Castle",
-          "rotation": 0,
-          "type": "",
-          "visible": true,
-          "width": 34.1209,
-          "x": 254.461,
-          "y": 224.857
-        },
-
-        {
-          "height": 98,
-          "id": 69,
-          "name": "Collider1",
-          "rotation": 0,
-          "type": "",
-          "visible": true,
-          "width": 128,
-          "x": 192,
-          "y": 158
-        },
-        {
-          "gid": 328,
-          "height": 34.1209,
-          "id": 73,
-          "name": "Castle",
-          "properties": [
-            {
-              "name": "base collision",
-              "type": "string",
-              "value": "True"
-            }
-          ],
-          "rotation": 0,
-          "type": "",
-          "visible": true,
-          "width": 34.1209,
-          "x": 924.704,
-          "y": 1214.09
-        },
-        {
-          "gid": 300,
-          "height": 34.1209,
-          "id": 74,
-          "name": "Castle",
-          "properties": [
-            {
-              "name": "base collision",
-              "type": "string",
-              "value": "True"
-            }
-          ],
-          "rotation": 0,
-          "type": "",
-          "visible": true,
-          "width": 34.1209,
-          "x": 955.9,
-          "y": 1214.09
-        },
-        {
-          "gid": 263,
-          "height": 33.7977,
-          "id": 75,
-          "name": "Castle",
-          "properties": [
-            {
-              "name": "base collision",
-              "type": "string",
-              "value": "False"
-            }
-          ],
-          "rotation": 0,
-          "type": "",
-          "visible": true,
-          "width": 33.7977,
-          "x": 894.443,
-          "y": 1119.95
-        },
-        {
-          "gid": 263,
-          "height": 33.7977,
-          "id": 76,
-          "name": "Castle",
-          "properties": [
-            {
-              "name": "base collision",
-              "type": "string",
-              "value": "False"
-            }
-          ],
-          "rotation": 0,
-          "type": "",
-          "visible": true,
-          "width": 33.7977,
-          "x": 925.344,
-          "y": 1089.05
-        },
-        {
-          "gid": 249,
-          "height": 33.7977,
-          "id": 77,
-          "name": "Castle",
-          "rotation": 0,
-          "type": "",
-          "visible": true,
-          "width": 33.7977,
-          "x": 956.244,
-          "y": 1089.05
-        },
-        {
-          "gid": 249,
-          "height": 33.7977,
-          "id": 78,
-          "name": "Castle",
-          "properties": [
-            {
-              "name": "base collision",
-              "type": "string",
-              "value": "False"
-            }
-          ],
-          "rotation": 0,
-          "type": "",
-          "visible": true,
-          "width": 33.7977,
-          "x": 987.145,
-          "y": 1119.95
-        },
-        {
-          "gid": 305,
-          "height": 33.7977,
-          "id": 79,
-          "name": "Castle",
-          "properties": [
-            {
-              "name": "base collision",
-              "type": "string",
-              "value": "False"
-            }
-          ],
-          "rotation": 0,
-          "type": "",
-          "visible": true,
-          "width": 33.7977,
-          "x": 925.344,
-          "y": 1119.95
-        },
-        {
-          "gid": 305,
-          "height": 33.7977,
-          "id": 80,
-          "name": "Castle",
-          "properties": [
-            {
-              "name": "base collision",
-              "type": "string",
-              "value": "False"
-            }
-          ],
-          "rotation": 0,
-          "type": "",
-          "visible": true,
-          "width": 33.7977,
-          "x": 956.244,
-          "y": 1119.95
-        },
-        {
-          "gid": 298,
-          "height": 33.7977,
-          "id": 81,
-          "name": "Castle",
-          "properties": [
-            {
-              "name": "base collision",
-              "type": "string",
-              "value": "False"
-            }
-          ],
-          "rotation": 0,
-          "type": "",
-          "visible": true,
-          "width": 33.7977,
-          "x": 925.344,
-          "y": 1058.15
-        },
-        {
-          "gid": 165,
-          "height": 34.1209,
-          "id": 82,
-          "name": "Castle",
-          "rotation": 0,
-          "type": "",
-          "visible": true,
-          "width": 34.1209,
-          "x": 893.507,
-          "y": 1151.7
-        },
-        {
-          "gid": 165,
-          "height": 34.1209,
-          "id": 83,
-          "name": "Castle",
-          "rotation": 0,
-          "type": "",
-          "visible": true,
-          "width": 34.1209,
-          "x": 987.096,
-          "y": 1151.7
-        },
-        {
-          "gid": 105,
-          "height": 34.1209,
-          "id": 84,
-          "name": "Castle",
-          "rotation": 0,
-          "type": "",
-          "visible": true,
-          "width": 34.1209,
-          "x": 955.9,
-          "y": 1151.7
-        },
-        {
-          "gid": 105,
-          "height": 34.1209,
-          "id": 85,
-          "name": "Castle",
-          "rotation": 0,
-          "type": "",
-          "visible": true,
-          "width": 34.1209,
-          "x": 924.704,
-          "y": 1151.7
-        },
-        {
-          "gid": 345,
-          "height": 34.1209,
-          "id": 86,
-          "name": "Castle",
-          "rotation": 0,
-          "type": "",
-          "visible": true,
-          "width": 34.1209,
-          "x": 893.507,
-          "y": 1214.09
-        },
-        {
-          "gid": 345,
-          "height": 34.1209,
-          "id": 87,
-          "name": "Castle",
-          "rotation": 0,
-          "type": "",
-          "visible": true,
-          "width": 34.1209,
-          "x": 893.507,
-          "y": 1182.9
-        },
-        {
-          "gid": 317,
-          "height": 34.1209,
-          "id": 88,
-          "name": "Castle",
-          "rotation": 0,
-          "type": "",
-          "visible": true,
-          "width": 34.1209,
-          "x": 987.096,
-          "y": 1214.09
-        },
-        {
-          "gid": 317,
-          "height": 34.1209,
-          "id": 89,
-          "name": "Castle",
-          "rotation": 0,
-          "type": "",
-          "visible": true,
-          "width": 34.1209,
-          "x": 987.096,
-          "y": 1182.9
-        },
-        {
-          "gid": 317,
-          "height": 34.1209,
-          "id": 90,
-          "name": "Castle",
-          "rotation": 0,
-          "type": "",
-          "visible": true,
-          "width": 34.1209,
-          "x": 987.096,
-          "y": 1182.9
-        },
-        {
-          "gid": 359,
-          "height": 34.1209,
-          "id": 91,
-          "name": "Castle",
-          "rotation": 0,
-          "type": "",
-          "visible": true,
-          "width": 34.1209,
-          "x": 924.704,
-          "y": 1182.9
-        },
-
-        {
-          "gid": 359,
-          "height": 34.1209,
-          "id": 92,
-          "name": "Castle",
-          "rotation": 0,
-          "type": "",
-          "visible": true,
-          "width": 34.1209,
-          "x": 955.9,
-          "y": 1182.9
-        },
-        {
-          "height": 98,
-          "id": 93,
-          "name": "Collider2",
-          "rotation": 0,
-          "type": "",
-          "visible": true,
-          "width": 128,
-          "x": 896,
-          "y": 1118
-        }
-      ],
-      "opacity": 1,
-      "properties": [
-        {
-          "name": "Team",
-          "type": "string",
-          "value": "1"
-        }
-      ],
-      "type": "objectgroup",
-      "visible": true,
-      "x": 0,
-      "y": 0
-    }
-  ],
-  "nextlayerid": 5,
-  "nextobjectid": 94,
-  "orientation": "orthogonal",
-  "renderorder": "right-down",
-  "tiledversion": "1.10.1",
-  "tileheight": 64,
-  "tilesets": [
-    {
-      "columns": 2,
-      "firstgid": 1,
-      "image": "../tile_images/platform_tileset.png",
-      "imageheight": 64,
-      "imagewidth": 128,
-      "margin": 0,
-      "name": "platform_tileset",
-      "spacing": 0,
-      "tilecount": 2,
-      "tileheight": 64,
-      "tilewidth": 64
-    },
-    {
-      "firstgid": 3,
-      "source": "../tsx/castle.tsx"
-    }
-  ],
-  "tilewidth": 64,
-  "type": "map",
-  "version": "1.10",
-  "width": 20
+         "columns":11,
+         "firstgid":1,
+         "image":"..\/tile_images\/scribble_spritesheet.png",
+         "imageheight":704,
+         "imagewidth":704,
+         "margin":0,
+         "name":"scribble_spritesheet",
+         "spacing":0,
+         "tilecount":121,
+         "tileheight":64,
+         "tilewidth":64
+        }],
+ "tilewidth":64,
+ "type":"map",
+ "version":"1.10",
+ "width":20
 }

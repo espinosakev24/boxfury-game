@@ -7,18 +7,16 @@ class GameState extends BaseGameState {
   constructor(scene, map_key) {
     super(scene);
 
-    this.player = new Player(this, 200, 100);
+    this.player = new Player(this, 600, 300);
     this.flag = null;
 
     this.map = scene.make.tilemap({ key: map_key });
 
-    this.tileset = this.map.addTilesetImage('platform_tileset', 'tiles');
-
-    this.layer = this.map.createLayer('Tile Layer 1', this.tileset, 0, 0);
-    this.baseLayer = this.map.getObjectLayer('Base1', this.castleTileset, 0, 0);
-
-    this.map.setCollision(1);
-    this.scene.physics.add.collider(this.player, this.layer);
+    this.tileset = this.map.addTilesetImage('scribble_spritesheet', 'scribble_spritesheet');
+    this.world_layer = this.map.createLayer('world_layer', this.tileset, 0, 0);
+    this.decoration_layer = this.map.createLayer('decoration', this.tileset, 0, 0);
+    this.map.setCollision([ 17, 61, 106 ], true, false, this.world_layer);
+    this.scene.physics.add.collider(this.player, this.world_layer);
     this.scene.cameras.main.setBounds(
       0,
       0,
@@ -28,32 +26,20 @@ class GameState extends BaseGameState {
     this.scene.cameras.main.startFollow(this.player, true, 0.08, 0.08);
     this.scene.cameras.main.setBackgroundColor('#333333');
     this.scene.cameras.main.setZoom(1);
-
-    const spriteGroup = this.map.createFromObjects('Bases', 1, {
-      key: 'castle_tiles',
-    });
-
-    this.scene.add.group(spriteGroup);
-
     this.bullets = [];
 
-    this.bases = [];
-
     this.putFlag(500, 100);
-
-    this.initBases();
   }
 
   initBases() {
-    console.log();
 
-    this.baseLayer.objects
-      .filter((base) => base.name === 'Collider1' || base.name === 'Collider2')
-      .forEach(({ x, y, width, height, ...props }, idx) => {
-        this.bases.push(
-          new TeamBase(this, x, y + height, width, height, idx + 1)
-        );
-      });
+    // this.baseLayer.objects
+    //   .filter((base) => base.name === 'Collider1' || base.name === 'Collider2')
+    //   .forEach(({ x, y, width, height, ...props }, idx) => {
+    //     this.bases.push(
+    //       new TeamBase(this, x, y + height, width, height, idx + 1)
+    //     );
+    //   });
   }
 
   putFlag(x, y) {
@@ -63,8 +49,15 @@ class GameState extends BaseGameState {
   }
 
   update(time, delta) {
-    this.player.update(delta, this.graphics);
-    this.bullets.forEach((bullet) => bullet.update());
+    this.player.update(delta);
+    this.bullets.forEach((bullet) => {
+        bullet.update(delta);
+        if (!bullet.arrow.active){
+            bullet.arrow.destroy();
+            this.bullets.splice(this.bullets.indexOf(bullet), 1);
+        }
+    });
+    console.log(this.bullets.length);
   }
 }
 
