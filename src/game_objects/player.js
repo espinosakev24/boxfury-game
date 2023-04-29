@@ -16,8 +16,9 @@ class Player extends Phaser.GameObjects.Rectangle {
   static PLAYER_LEFT_DIRECTION = -1;
   static S_KEY_CODE = 83;
 
-  constructor(gameState, x, y) {
+  constructor(gameState, x, y, id) {
     super(gameState.scene, x, y, Player.SIZE, Player.SIZE, 0xffffff, 1.0);
+    this.id = id;
     this.gameState = gameState;
     this.scene.add.existing(this);
     this.canShoot = true;
