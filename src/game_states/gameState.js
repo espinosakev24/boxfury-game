@@ -57,7 +57,6 @@ class GameState extends BaseGameState {
             this.bullets.splice(this.bullets.indexOf(bullet), 1);
         }
     });
-    console.log(this.bullets.length);
   }
 }
 
