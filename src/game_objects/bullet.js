@@ -8,7 +8,17 @@ class Bullet extends Phaser.GameObjects.Arc {
     this.setVisible(false);
     this.gameState = gameState;
     this.scene.physics.add.existing(this);
-    this.scene.physics.add.collider(this, this.gameState.world_layer, (gameObjectA, gameObjectB) => {
+    this.body.setVelocity(
+      Math.sin(shootAngle) * speed * playerDirection,
+      Math.cos(shootAngle) * speed
+    );
+    this.arrow = this.scene.add.image(this.x, this.y, 'arrow');
+    this.arrow.setOrigin(0.7, 0.5);
+    this.arrow.setDepth(1);
+    this.scene.physics.add.overlap(this, this.gameState.world_layer, (gameObjectA, gameObjectB) => {
+      if (![ 17, 61, 106 ].includes(gameObjectB.index)){
+        return;
+      }
       if (this.scene){
         this.scene.time.addEvent({
           delay: 1000,
@@ -19,13 +29,6 @@ class Bullet extends Phaser.GameObjects.Arc {
       }
       this.destroy();
     });
-    this.body.setVelocity(
-      Math.sin(shootAngle) * speed * playerDirection,
-      Math.cos(shootAngle) * speed
-    );
-    this.arrow = this.scene.add.image(this.x, this.y, 'arrow');
-    this.arrow.setOrigin(0.7, 0.5);
-    this.arrow.setDepth(1);
   }
 
   update(delta) { 
