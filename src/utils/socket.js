@@ -1,17 +1,17 @@
-import io from "socket.io-client";
-import { MPC, Player } from "../game_objects";
+import io from 'socket.io-client';
+import { MPC, Player } from '../game_objects';
 
 class SocketHandler {
   constructor(gameState) {
-    gameState.socket = io("http://localhost:8000");
+    gameState.socket = io('http://localhost:8000');
 
-    gameState.socket.emit("player_connect", {
+    gameState.socket.emit('player_connect', {
       id: gameState.me.id,
       x: gameState.me.x,
       y: gameState.me.y,
     });
 
-    gameState.socket.on("connected", (data) => {
+    gameState.socket.on('connected', (data) => {
       data.players.forEach((player) => {
         if (player.id === gameState.me.id) return;
         const newPlayer = new MPC(gameState, player.x, player.y, player.id);
@@ -21,13 +21,12 @@ class SocketHandler {
       });
     });
 
-    gameState.socket.on("new_player_connected", (data) => {
+    gameState.socket.on('new_player_connected', (data) => {
       const newPlayer = new MPC(gameState, data.x, data.y, data.id);
       gameState.players.push(newPlayer);
     });
 
-    gameState.socket.on("player_disconnected", ({ id }) => {
-      console.log(gameState.players);
+    gameState.socket.on('player_disconnected', ({ id }) => {
       const playerDisconnected = gameState.players.find(
         (player) => player.id === id
       );
@@ -43,13 +42,13 @@ class SocketHandler {
      * From broadcast
      * @param {Object} data
      */
-    gameState.socket.on("player_moved", ({ action, id }) => {
+    gameState.socket.on('player_moved', ({ action, id, aimSpeed }) => {
       const playerMoved = gameState.players.find((player) => player.id === id);
 
-      playerMoved.movement(action);
+      playerMoved.movement({ action, aimSpeed });
     });
 
-    gameState.socket.on("player_updated", ({ id, x, y }) => {
+    gameState.socket.on('player_updated', ({ id, x, y, aimAngle }) => {
       const playerUpdated = gameState.players.find(
         (player) => player.id === id
       );
@@ -57,6 +56,7 @@ class SocketHandler {
       if (playerUpdated) {
         playerUpdated.x = x;
         playerUpdated.y = y;
+        playerUpdated.aimAngle = aimAngle;
       }
     });
   }

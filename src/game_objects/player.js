@@ -17,7 +17,7 @@ class Player extends Phaser.GameObjects.Sprite {
   static PLAYER_RIGHT_DIRECTION = 1;
   static PLAYER_LEFT_DIRECTION = -1;
   static S_KEY_CODE = 83;
-  static TICKS_PER_SECOND = 60;
+  static TICKS_PER_SECOND = 80;
 
   constructor(gameState, x, y, id) {
     super(gameState.scene, x, y, 'player');
@@ -54,11 +54,8 @@ class Player extends Phaser.GameObjects.Sprite {
   update(delta) {
     this.bow.x = this.x;
     this.bow.y = this.y;
-    if (this.lastDirection === Player.PLAYER_RIGHT_DIRECTION) {
-      this.setFlipX(false);
-    } else {
-      this.setFlipX(true);
-    }
+
+    this.setFlipX(!(this.lastDirection === Player.PLAYER_RIGHT_DIRECTION));
 
     this.shootTimer += delta;
     this.movement();
@@ -99,6 +96,7 @@ class Player extends Phaser.GameObjects.Sprite {
         id: this.id,
         x: this.x,
         y: this.y,
+        aimAngle: this.aimAngle,
       });
     }
   }
@@ -166,7 +164,6 @@ class Player extends Phaser.GameObjects.Sprite {
     );
 
     if (this.aimAngle >= Player.MAX_ANGLE && this.canShoot && !this.hasFlag) {
-      this.shoot();
       this.accumulatedDelta = 0;
       this.aimAngle = 0;
       this.aimSpeed = 0;
@@ -209,6 +206,14 @@ class Player extends Phaser.GameObjects.Sprite {
         id: this.id,
       });
     }
+
+    if (keyCode === KEYBOARD.SPACE && this.canShoot && !this.hasFlag) {
+      this.gameState.socket.emit('player_action', {
+        action: PLAYER_MOVEMENTS.SHOOT,
+        id: this.id,
+        aimSpeed: this.aimSpeed,
+      });
+    }
   }
 
   handleEmitEvent(key) {
@@ -231,6 +236,13 @@ class Player extends Phaser.GameObjects.Sprite {
     if (key === KEYBOARD.W) {
       this.gameState.socket.emit('player_action', {
         action: PLAYER_MOVEMENTS.JUMP,
+        id: this.id,
+      });
+    }
+
+    if (key === KEYBOARD.S) {
+      this.gameState.socket.emit('player_action', {
+        action: PLAYER_MOVEMENTS.AIM,
         id: this.id,
       });
     }
