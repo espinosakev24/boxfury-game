@@ -17,6 +17,7 @@ class Player extends Phaser.GameObjects.Sprite {
   static PLAYER_RIGHT_DIRECTION = 1;
   static PLAYER_LEFT_DIRECTION = -1;
   static S_KEY_CODE = 83;
+  static TICKS_PER_SECOND = 60;
 
   constructor(gameState, x, y, id) {
     super(gameState.scene, x, y, 'player');
@@ -46,6 +47,8 @@ class Player extends Phaser.GameObjects.Sprite {
     this.flagTexture.setDisplaySize(Flag.WIDTH, Flag.HEIGHT);
     this.flagTexture.setOrigin(0, 0);
     this.flagTexture.visible = false;
+
+    this.timeElapsed = 0;
   }
 
   update(delta) {
@@ -87,19 +90,28 @@ class Player extends Phaser.GameObjects.Sprite {
       this.flagTexture.x = this.x;
       this.flagTexture.y = this.y - 70;
     }
+
+    this.timeElapsed += delta;
+
+    if (this.timeElapsed > 1000 / Player.TICKS_PER_SECOND) {
+      this.timeElapsed = 0;
+      this.gameState.socket.emit('player_update', {
+        id: this.id,
+        x: this.x,
+        y: this.y,
+      });
+    }
   }
 
   /**
    * Shoot the bullet
    */
   shoot() {
-    const x = this.x + (this.width / 2) * this.lastDirection;
-
     this.gameState.bullets.push(
       new Bullet(
         this.scene,
         this.gameState,
-        x,
+        this.x,
         this.y,
         this.aimAngle,
         this.aimSpeed,

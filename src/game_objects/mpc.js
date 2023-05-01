@@ -26,6 +26,11 @@ class MPC extends Player {
     }
   }
 
+  destroy() {
+    super.destroy();
+    this.bow.destroy();
+  }
+
   update() {}
 }
 

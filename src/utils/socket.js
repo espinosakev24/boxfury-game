@@ -51,6 +51,15 @@ class SocketHandler {
 
       playerMoved.movement(action);
     });
+
+    gameState.socket.on('player_updated', ({ id, x, y }) => {
+      const playerUpdated = gameState.players.find(
+        (player) => player.id === id
+      );
+
+      playerUpdated.x = x;
+      playerUpdated.y = y;
+    });
   }
 }
 
