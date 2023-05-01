@@ -10,7 +10,7 @@ class MPC extends Phaser.GameObjects.Sprite {
   }
 
   destroy() {
-    // TODO
+    super.destroy();
   }
 
   movement() {

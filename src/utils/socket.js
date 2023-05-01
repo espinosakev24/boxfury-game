@@ -54,8 +54,10 @@ class SocketHandler {
         (player) => player.id === id
       );
 
-      playerUpdated.x = x;
-      playerUpdated.y = y;
+      if (playerUpdated) {
+        playerUpdated.x = x;
+        playerUpdated.y = y;
+      }
     });
   }
 }
