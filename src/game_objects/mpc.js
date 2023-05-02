@@ -11,10 +11,14 @@ class MPC extends Phaser.GameObjects.Sprite {
     this.lastXPos = 0;
 
     this.bow = this.scene.add.image(this.x, this.y, 'bow');
+    this.scene.physics.add.existing(this);
+    this.body.setAllowGravity(false);
     this.bow.setOrigin(0, 0.5);
     this.bow.setDepth(1);
 
     this.setDepth(2);
+
+    this.body.setSize(32, 64, true);
   }
 
   update() {
@@ -42,7 +46,6 @@ class MPC extends Phaser.GameObjects.Sprite {
 
   shoot() {
     const bulletDir = this.flipX ? -1 : 1;
-    debugger;
     this.gameState.bullets.push(
       new Bullet(
         this.scene,

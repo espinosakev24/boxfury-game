@@ -195,8 +195,6 @@ class Player extends Phaser.GameObjects.Sprite {
     }
 
     this.handleEmitEvent(event.keyCode);
-
-    // console.log(event.keyCode);
   }
 
   handleInputReleased({ keyCode }) {

@@ -33,6 +33,22 @@ class Bullet extends Phaser.GameObjects.Arc {
         this.destroy();
       }
     );
+
+    this.scene.physics.add.collider(
+      this,
+      [...this.gameState.players, this.gameState.me],
+      (bullet, player) => {
+        if (this.scene) {
+          this.scene.time.addEvent({
+            delay: 1000,
+            callback: this.destroy_arrow,
+            callbackScope: this,
+            loop: false,
+          });
+        }
+        this.destroy();
+      }
+    );
   }
 
   update(delta) {
